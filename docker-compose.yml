@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  dbos:
+    image: mysql:5.7
+    volumes:
+      - mysql_storage_composed:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: redhat
+      MYSQL_USER: silvereon
+      MYSQL_PASSWORD: rajat
+      MYSQL_DATABASE: clouddb
+  cloudos:
+    image: owncloud
+    ports:
+      - 8080:80
+    depends_on:
+      - dbos
+    volumes:
+      - cloud_storage_composed:/var/www/html
+    restart: always
+volumes:
+  mysql_storage_composed:
+  cloud_storage_composed:
